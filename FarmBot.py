@@ -5,6 +5,7 @@ import tkinter as tk
 import re
 import cv2
 import numpy as np
+import datetime
 from PIL import Image
 from pytesseract import pytesseract
 
@@ -13,7 +14,7 @@ from CoordinateTracker import CoordinatesTracker
 available = 0
 ping_rate = 0
 # Cihaz seri numarasını burada bir kez tanımlıyoruz
-device_serial = 'localhost:5565'
+device_serial = 'localhost:5555'
 
 # Tkinter arayüzü kurma
 root = tk.Tk()
@@ -75,14 +76,26 @@ def run_adb_command(command):
 # Şablon eşleştirme
 def tab_process(rss_tuple):
     global ping_rate
+    adb_tap(90, 810)
+    gather_area,plus,minus,search=control_entry(rss_tuple)
+    adb_tap(gather_area[0], gather_area[1])
+    if ping_rate == 0:
+        adb_tap(plus[0], plus[1])
+    elif ping_rate > 3:
+        adb_tap(minus[0], minus[1])
+    adb_tap(search[0], search[1])
+
+
+tracker = CoordinatesTracker()
+
+def control_entry(rss_tuple):
     gather_area = 0
     plus = 0
     search = 0
     minus = 0
-    adb_tap(90, 810)
-    print(int(corn_entry.get()))
-    if(int(corn_entry.get()) == 0 and int(wood_entry.get()) == 0  and int(stone_entry.get()) == 0  and int(gold_entry.get()) == 0):
-        update_resource_entry("corn","plus",rss_tuple[0])
+    if (int(corn_entry.get()) == 0 and int(wood_entry.get()) == 0 and int(stone_entry.get()) == 0 and int(
+            gold_entry.get()) == 0):
+        update_resource_entry("corn", "plus", rss_tuple[0])
         update_resource_entry("wood", "plus", rss_tuple[1])
         update_resource_entry("stone", "plus", rss_tuple[2])
         update_resource_entry("gold", "plus", rss_tuple[3])
@@ -91,66 +104,66 @@ def tab_process(rss_tuple):
     if int(corn_entry.get()) > 0:
         gather_area = (665, 950)
         plus = (830, 605)
-        minus =(466,610)
+        minus = (466, 610)
         search = (675, 735)
-        update_resource_entry("corn","minus",1)
+        update_resource_entry("corn", "minus", 1)
     elif int(wood_entry.get()) > 0:
         gather_area = (955, 950)
         plus = (1120, 605)
-        minus = (757,610)
+        minus = (757, 610)
         search = (955, 735)
-        update_resource_entry("wood","minus",1)
+        update_resource_entry("wood", "minus", 1)
     elif int(stone_entry.get()) > 0:
         gather_area = (1245, 950)
         plus = (1405, 605)
         minus = (1046, 610)
         search = (1235, 735)
-        update_resource_entry("stone","minus",1)
+        update_resource_entry("stone", "minus", 1)
     elif int(gold_entry.get()) > 0:
         gather_area = (1535, 950)
         plus = (1695, 605)
-        minus =(1327,610)
+        minus = (1327, 610)
         search = (1525, 735)
-        update_resource_entry("gold","minus",1)
-
-    adb_tap(gather_area[0], gather_area[1])
-    if ping_rate == 0:
-        adb_tap(plus[0], plus[1])
-    elif ping_rate > 5:
-        adb_tap(minus[0], minus[1])
-    adb_tap(search[0], search[1])
-
-
-tracker = CoordinatesTracker()
-
-
+        update_resource_entry("gold", "minus", 1)
+    return gather_area,plus,minus,search
 def confirm_process():
     global ping_rate
+    global available
     time.sleep(2)
 
-    adb_tap(953, 530)  # kaynak
+    #adb_tap(953, 530)  # kaynak
     time.sleep(1)
     collect_control = (1277, 671, 1581, 783)
+    find_button_control = (1408, 687, 1663, 785)
     take_and_pull_screenshot()
-    x_rss_coordinate = extract_coordinate(1386, 283, 1433, 315)  # X Kaynak koordinatını kaydettik.
-    y_rss_coordinate = extract_coordinate(1457, 280, 1513, 315)  # Y Kaynak koordinatını kaydettik.
-    crop_screenshot(collect_control)
-    match = find_template_in_image("cropped_screenshot.png", "screenshot.png", threshold=0.70)
-    valid = tracker.compare_coordinates(x_rss_coordinate, y_rss_coordinate)
-    if valid == 0:
-        tracker.add_coordinate(x_rss_coordinate, y_rss_coordinate)
-        if match:
-            ping_rate = 0
-            adb_tap(1423, 730)  # Confirm
-            time.sleep(0.5)
-            adb_tap(1513, 215)  # Confirm
-            time.sleep(0.5)
-            adb_tap(1400, 944)
-            time.sleep(0.5)
+    crop_screenshot(find_button_control)
+    #Eğer bir yer bulmazsa 'ARA' tuşuna bakıyo var mı
+    match = find_template_in_image("screenshot.png", "Ara.png", threshold=0.68)
+    if not match:
+        x_rss_coordinate = extract_coordinate(1386, 283, 1433, 315)  # X Kaynak koordinatını kaydettik.
+        y_rss_coordinate = extract_coordinate(1457, 280, 1513, 315)  # Y Kaynak koordinatını kaydettik.
+        crop_screenshot(collect_control)
+        match = find_template_in_image("cropped_screenshot.png", "screenshot.png", threshold=0.70)
+        valid = tracker.compare_coordinates(x_rss_coordinate, y_rss_coordinate)
+        if valid == 0:
+            tracker.add_coordinate(x_rss_coordinate, y_rss_coordinate)
+            if match:
+                ping_rate = 0
+                adb_tap(1423, 730)  # Confirm
+                time.sleep(0.5)
+                adb_tap(1513, 215)  # Confirm
+                time.sleep(0.5)
+                adb_tap(1400, 944)
+                time.sleep(0.5)
+        else:
+            ping_rate += 1
+            available += 1
     else:
-        global available
         ping_rate += 1
-        available += 1
+        adb_tap(953, 530)  # Şehir
+        print("Bulunamadı")
+
+
 
 def farm_loop(rss_tuple):
     adb_tap(90, 980)  # Map
@@ -173,7 +186,7 @@ def farm_loop(rss_tuple):
             time.sleep(1)
             take_and_pull_screenshot()
             match = find_template_in_image(big_image_path="screenshot.png", small_image_path="Koordinat.png",
-                                           threshold=0.60)
+                                           threshold=0.70)
             if match:
                 time.sleep(0.2)
                 x_city_coordinate = extract_coordinate(1386, 283, 1433, 315)  # X Şehir koordinatını kaydettik.
@@ -203,7 +216,9 @@ def farm_loop(rss_tuple):
                                 available -= 1
 
                         if available == 0:
-                            time.sleep(180)
+                            current_time = datetime.datetime.now()
+                            print(current_time)
+                            time.sleep(20)
 
                     else:
                         print("Koordinatlar düzgün okunmadı.")
@@ -229,7 +244,7 @@ def update_resource_entry(resource, operation, amount):
     try:
         # Mevcut değeri al
         current_value = int(entry.get())
-
+        new_value= 0
         # İşlemi uygula
         if operation == "plus":
             new_value = current_value + amount
@@ -333,7 +348,7 @@ def crop_screenshot(crop_area, local_screenshot_path='screenshot.png', cropped_f
         return cropped_path
 
 
-def take_and_pull_screenshot(device_serial='localhost:5565'):
+def take_and_pull_screenshot(device_serial='localhost:5555'):
 
 
     # Take a screenshot
@@ -352,9 +367,10 @@ def take_and_pull_screenshot(device_serial='localhost:5565'):
     return (output, error, local_screenshot_path)
 
 
-def adb_tap(x, y, device_serial='localhost:5565'):
+def adb_tap(x, y, device_serial='localhost:5555'):
     """ADB kullanarak Bluestacks ekranında belirtilen koordinatlara tıklar."""
     command = f'adb -s {device_serial} shell input tap {x} {y}'
+    time.sleep(0.1)
     output, error = run_adb_command(command)
     if error:
         print(f"Hata: {error}")
@@ -363,7 +379,7 @@ def adb_tap(x, y, device_serial='localhost:5565'):
 
 
 def swipe_down(start_x=500, start_y=1200, end_x=500, end_y=800, duration=1000):
-    device_serial = 'localhost:5565'
+    device_serial = 'localhost:5555'
     cmd = [
         "adb", "-s", device_serial, "shell", "input", "swipe",
         str(start_x), str(start_y), str(end_x), str(end_y), str(duration)
