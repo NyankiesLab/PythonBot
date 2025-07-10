@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="87023cb4-0021-47ad-a458-138c98fcf8df" name="Changes" comment="last commit.">
+    <list default="true" id="87023cb4-0021-47ad-a458-138c98fcf8df" name="Changes" comment="Son güncellemelerden sonra bozulmalar düzeltildi.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FarmBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/FarmBot.py" afterDir="false" />
     </list>
@@ -93,7 +93,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741603974863</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Son güncellemelerden sonra bozulmalar düzeltildi.">
+      <option name="closed" value="true" />
+      <created>1749866881497</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1749866881497</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -109,85 +117,76 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="last commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="last commit." />
+    <MESSAGE value="Son güncellemelerden sonra bozulmalar düzeltildi." />
+    <option name="LAST_COMMIT_MESSAGE" value="Son güncellemelerden sonra bozulmalar düzeltildi." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>80</line>
+          <line>71</line>
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>169</line>
+          <line>132</line>
           <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>171</line>
+          <line>134</line>
           <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>173</line>
+          <line>136</line>
           <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>176</line>
+          <line>138</line>
           <option name="timeStamp" value="104" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>178</line>
+          <line>140</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>179</line>
+          <line>141</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>184</line>
+          <line>145</line>
           <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>185</line>
+          <line>146</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>181</line>
+          <line>143</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>141</line>
-          <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>142</line>
+          <line>113</line>
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>160</line>
+          <line>127</line>
           <option name="timeStamp" value="115" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>161</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/FarmBot.py</url>
-          <line>138</line>
-          <option name="timeStamp" value="117" />
+          <line>112</line>
+          <option name="timeStamp" value="119" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
